@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>401</width>
+      <height>241</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>DataAnalyse</string>
+    </property>
+    <widget class="QMenu" name="menuPixel">
+     <property name="title">
+      <string>Pixel</string>
+     </property>
+     <addaction name="actionYuv420_split"/>
+     <addaction name="actionYuv444_split"/>
+     <addaction name="actionYuv420_gray"/>
+     <addaction name="actionYuv420_halfy"/>
+     <addaction name="actionYuv420_border"/>
+     <addaction name="actionYuv420_graybar"/>
+     <addaction name="actionYuv420_psnr"/>
+     <addaction name="actionRgb24_split"/>
+     <addaction name="actionRgb24_to_bmp"/>
+     <addaction name="actionRgb24_to_yuv420"/>
+     <addaction name="actionRgb24_colorbar"/>
+    </widget>
+    <addaction name="menuPixel"/>
+    <addaction name="actionPCM"/>
+    <addaction name="actionH264"/>
+    <addaction name="actionAAC"/>
+    <addaction name="actionFLV"/>
+    <addaction name="actionUDP_RTP"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="actionPCM">
+   <property name="text">
+    <string>PCM</string>
+   </property>
+  </action>
+  <action name="actionH264">
+   <property name="text">
+    <string>H264</string>
+   </property>
+  </action>
+  <action name="actionAAC">
+   <property name="text">
+    <string>AAC</string>
+   </property>
+  </action>
+  <action name="actionFLV">
+   <property name="text">
+    <string>FLV</string>
+   </property>
+  </action>
+  <action name="actionUDP_RTP">
+   <property name="text">
+    <string>UDP-RTP</string>
+   </property>
+  </action>
+  <action name="actionYuv420_split">
+   <property name="text">
+    <string>yuv420_split</string>
+   </property>
+  </action>
+  <action name="actionYuv444_split">
+   <property name="text">
+    <string>yuv444_split</string>
+   </property>
+  </action>
+  <action name="actionYuv420_gray">
+   <property name="text">
+    <string>yuv420_gray</string>
+   </property>
+  </action>
+  <action name="actionYuv420_halfy">
+   <property name="text">
+    <string>yuv420_halfy</string>
+   </property>
+  </action>
+  <action name="actionYuv420_border">
+   <property name="text">
+    <string>yuv420_border</string>
+   </property>
+  </action>
+  <action name="actionYuv420_graybar">
+   <property name="text">
+    <string>yuv420_graybar</string>
+   </property>
+  </action>
+  <action name="actionYuv420_psnr">
+   <property name="text">
+    <string>yuv420_psnr</string>
+   </property>
+  </action>
+  <action name="actionRgb24_split">
+   <property name="text">
+    <string>rgb24_split</string>
+   </property>
+  </action>
+  <action name="actionRgb24_to_bmp">
+   <property name="text">
+    <string>rgb24_to_bmp</string>
+   </property>
+  </action>
+  <action name="actionRgb24_to_yuv420">
+   <property name="text">
+    <string>rgb24_to_yuv420</string>
+   </property>
+  </action>
+  <action name="actionRgb24_colorbar">
+   <property name="text">
+    <string>rgb24_colorbar</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
