@@ -20,3 +20,6 @@ HEADERS  += mainwindow.h \
     MyPixel.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    easyplayer.qrc

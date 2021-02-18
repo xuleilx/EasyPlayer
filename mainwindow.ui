@@ -49,6 +49,7 @@
      <addaction name="actionYuv420_border"/>
      <addaction name="actionYuv420_graybar"/>
      <addaction name="actionYuv420_psnr"/>
+     <addaction name="separator"/>
      <addaction name="actionRgb24_split"/>
      <addaction name="actionRgb24_to_bmp"/>
      <addaction name="actionRgb24_to_yuv420"/>
