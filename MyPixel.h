@@ -75,6 +75,16 @@ public:
      * @param num      Number of frames to process.
      */
      static double yuv420_psnr(char *url1,char *url2,int w,int h,int num);
+
+     /**
+      * Split R, G, B planes in RGB24 file.
+      * @param url  Location of Input RGB file.
+      * @param w    Width of Input RGB file.
+      * @param h    Height of Input RGB file.
+      * @param num  Number of frames to process.
+      *
+      */
+     static int rgb24_split(char *url, int w, int h,int num);
 };
 
 #endif // MYPIXEL_H

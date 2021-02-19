@@ -26,7 +26,7 @@ MainWindow::~MainWindow()
 VideoInfo MainWindow::getInfoFromFilename(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     "/home/xuleilx/Videos",
-                                                    tr("Raw YUV (*.yuv)"));
+                                                    tr("Raw (*.yuv *.rgb)"));
     VideoInfo videoInfo={0,0,0};
 
     if(!fileName.isNull()){
@@ -48,8 +48,8 @@ VideoInfo MainWindow::getInfoFromFilename(){
         qDebug()<<list.at(0).toInt();
         qDebug()<<list.at(1).toInt();
 
-//        QByteArray byteArray(fileName.toLatin1());
-//        char *fileUri = byteArray.data();
+        //        QByteArray byteArray(fileName.toLatin1());
+        //        char *fileUri = byteArray.data();
 
         videoInfo.name = fileName;
         videoInfo.width = list.at(0).toInt();
@@ -196,4 +196,17 @@ void MainWindow::on_actionYuv420_psnr_triggered()
                                    videoInfo1.width,
                                    videoInfo1.height,
                                    1);
+}
+
+// note: yuvplayer : 800x480, format: y
+void MainWindow::on_actionRgb24_split_triggered()
+{
+    VideoInfo videoInfo = getInfoFromFilename();
+    if(videoInfo.name.isEmpty() || videoInfo.width == 0 || videoInfo.height == 0){
+        return;
+    }
+    MyPixel::rgb24_split(videoInfo.name.toLatin1().data(),
+                         videoInfo.width,
+                         videoInfo.height,
+                         1);
 }

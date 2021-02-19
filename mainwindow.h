@@ -39,6 +39,8 @@ private slots:
 
     void on_actionYuv420_psnr_triggered();
 
+    void on_actionRgb24_split_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
