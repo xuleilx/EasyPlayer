@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    MyPixel.cpp
+    MyPixel.cpp \
+    MyPcm.cpp
 
 HEADERS  += mainwindow.h \
-    MyPixel.h
+    MyPixel.h \
+    MyPcm.h
 
 FORMS    += mainwindow.ui
 

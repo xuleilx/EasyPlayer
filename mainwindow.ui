@@ -55,8 +55,19 @@
      <addaction name="actionRgb24_to_yuv420"/>
      <addaction name="actionRgb24_colorbar"/>
     </widget>
+    <widget class="QMenu" name="menuPCM">
+     <property name="title">
+      <string>PCM</string>
+     </property>
+     <addaction name="actionPcm16le_split"/>
+     <addaction name="actionPcm16le_halfvolumeleft"/>
+     <addaction name="actionPcm16le_doublespeed"/>
+     <addaction name="actionPcm16le_to_pcm8"/>
+     <addaction name="actionPcm16le_cut_singlechannel"/>
+     <addaction name="actionPcm16le_to_wave"/>
+    </widget>
     <addaction name="menuPixel"/>
-    <addaction name="actionPCM"/>
+    <addaction name="menuPCM"/>
     <addaction name="actionH264"/>
     <addaction name="actionAAC"/>
     <addaction name="actionFLV"/>
@@ -73,11 +84,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionPCM">
-   <property name="text">
-    <string>PCM</string>
-   </property>
-  </action>
   <action name="actionH264">
    <property name="text">
     <string>H264</string>
@@ -151,6 +157,36 @@
   <action name="actionRgb24_colorbar">
    <property name="text">
     <string>rgb24_colorbar</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_split">
+   <property name="text">
+    <string>pcm16le_split</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_halfvolumeleft">
+   <property name="text">
+    <string>pcm16le_halfvolumeleft</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_doublespeed">
+   <property name="text">
+    <string>pcm16le_doublespeed</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_to_pcm8">
+   <property name="text">
+    <string>pcm16le_to_pcm8</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_cut_singlechannel">
+   <property name="text">
+    <string>pcm16le_cut_singlechannel</string>
+   </property>
+  </action>
+  <action name="actionPcm16le_to_wave">
+   <property name="text">
+    <string>pcm16le_to_wave</string>
    </property>
   </action>
  </widget>

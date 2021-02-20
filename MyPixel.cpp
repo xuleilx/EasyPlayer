@@ -279,8 +279,10 @@ int MyPixel::rgb24_to_bmp(const char *rgb24path,int width,int height,const char 
     }InfoHead;
 
     int i=0,j=0;
-    BmpHead m_BMPHeader={0};
-    InfoHead  m_BMPInfoHeader={0};
+    BmpHead m_BMPHeader;
+    InfoHead  m_BMPInfoHeader;
+    memset(&m_BMPHeader,0,sizeof(BmpHead));
+    memset(&m_BMPInfoHeader,0,sizeof(InfoHead));
     char bfType[2]={'B','M'};
     int header_size=sizeof(bfType)+sizeof(BmpHead)+sizeof(InfoHead);
     unsigned char *rgb24_buffer=NULL;
@@ -399,7 +401,6 @@ int MyPixel::rgb24_colorbar(int width, int height,char *url_out){
 
     unsigned char *data=NULL;
     int barwidth;
-    char filename[100]={0};
     FILE *fp=NULL;
     int i=0,j=0;
 

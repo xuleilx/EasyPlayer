@@ -23,6 +23,7 @@ public:
 
 private:
     VideoInfo getInfoFromFilename();
+    QString getFilePath();
 
 private slots:
     void on_actionYuv444_split_triggered();
@@ -46,6 +47,18 @@ private slots:
     void on_actionRgb24_colorbar_triggered();
 
     void on_actionRgb24_to_bmp_triggered();
+
+    void on_actionPcm16le_split_triggered();
+
+    void on_actionPcm16le_halfvolumeleft_triggered();
+
+    void on_actionPcm16le_doublespeed_triggered();
+
+    void on_actionPcm16le_to_pcm8_triggered();
+
+    void on_actionPcm16le_cut_singlechannel_triggered();
+
+    void on_actionPcm16le_to_wave_triggered();
 
 private:
     Ui::MainWindow *ui;

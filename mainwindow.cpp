@@ -10,6 +10,7 @@
 #include <QDialogButtonBox>
 #include <QDebug>
 #include "MyPixel.h"
+#include "MyPcm.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,6 +58,13 @@ VideoInfo MainWindow::getInfoFromFilename(){
         return videoInfo;
     }
     return videoInfo;
+}
+
+QString MainWindow::getFilePath(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home/xuleilx/Music",
+                                                    tr("Raw (*.pcm)"));
+    return fileName;
 }
 
 void MainWindow::on_actionYuv420_split_triggered()
@@ -221,8 +229,7 @@ void MainWindow::on_actionRgb24_to_yuv420_triggered()
                              videoInfo1.width,
                              videoInfo1.height,
                              1,
-                             "output.yuv"
-                             );
+                             "output.yuv");
 }
 
 void MainWindow::on_actionRgb24_colorbar_triggered()
@@ -279,4 +286,133 @@ void MainWindow::on_actionRgb24_to_bmp_triggered()
                           videoInfo1.height,
                           "output.bmp"
                           );
+}
+
+void MainWindow::on_actionPcm16le_split_triggered()
+{
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyPcm::pcm16le_split(filePath.toLatin1().data());
+}
+
+void MainWindow::on_actionPcm16le_halfvolumeleft_triggered()
+{
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyPcm::pcm16le_halfvolumeleft(filePath.toLatin1().data());
+}
+
+void MainWindow::on_actionPcm16le_doublespeed_triggered()
+{
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyPcm::pcm16le_doublespeed(filePath.toLatin1().data());
+}
+
+void MainWindow::on_actionPcm16le_to_pcm8_triggered()
+{
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyPcm::pcm16le_to_pcm8(filePath.toLatin1().data());
+}
+
+void MainWindow::on_actionPcm16le_cut_singlechannel_triggered()
+{
+    // input file
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+
+    // input cut info
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // start num
+    QString startNum = QString("start num: ");
+    QSpinBox *startNumSpinbox = new QSpinBox(&dialog);
+    startNumSpinbox->setMaximum(9999);
+    form.addRow(startNum, startNumSpinbox);
+    // dur num
+    QString durNum = QString("dur num: ");
+    QSpinBox *durNumSpinbox = new QSpinBox(&dialog);
+    durNumSpinbox->setMaximum(9999);
+    form.addRow(durNum, durNumSpinbox);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<startNumSpinbox->value();
+        qDebug()<<durNumSpinbox->value();
+
+        if(durNumSpinbox->value() == 0) return;
+
+        MyPcm::pcm16le_cut_singlechannel(filePath.toLatin1().data(),
+                                         startNumSpinbox->value(),
+                                         durNumSpinbox->value());
+    }
+}
+
+void MainWindow::on_actionPcm16le_to_wave_triggered()
+{
+    // input file
+    QString filePath = getFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+
+    // input audio info
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // Sample Rate
+    QString sampleRate = QString("Sample Rate: ");
+    QSpinBox *sampleRateSpinbox = new QSpinBox(&dialog);
+    sampleRateSpinbox->setMaximum(48000);
+    form.addRow(sampleRate, sampleRateSpinbox);
+    // Channels
+    QString channels = QString("Channels: ");
+    QSpinBox *channelsSpinbox = new QSpinBox(&dialog);
+    channelsSpinbox->setMaximum(2);
+    form.addRow(channels, channelsSpinbox);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<sampleRateSpinbox->value();
+        qDebug()<<channelsSpinbox->value();
+
+        if(sampleRateSpinbox->value() ==0 || channelsSpinbox->value() == 0) return;
+
+        MyPcm::pcm16le_to_wave(filePath.toLatin1().data(),
+                               channelsSpinbox->value(),
+                               sampleRateSpinbox->value(),
+                               "output_nocturne.wav");
+    }
 }
