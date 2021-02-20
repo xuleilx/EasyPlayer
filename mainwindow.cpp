@@ -11,6 +11,7 @@
 #include <QDebug>
 #include "MyPixel.h"
 #include "MyPcm.h"
+#include "MyH264.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -60,10 +61,18 @@ VideoInfo MainWindow::getInfoFromFilename(){
     return videoInfo;
 }
 
-QString MainWindow::getFilePath(){
+QString MainWindow::getPcmFilePath(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     "/home/xuleilx/Music",
                                                     tr("Raw (*.pcm)"));
+    return fileName;
+}
+
+
+QString MainWindow::getH264FilePath(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home/xuleilx/Videos",
+                                                    tr("Raw (*.h264)"));
     return fileName;
 }
 
@@ -290,7 +299,7 @@ void MainWindow::on_actionRgb24_to_bmp_triggered()
 
 void MainWindow::on_actionPcm16le_split_triggered()
 {
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -300,7 +309,7 @@ void MainWindow::on_actionPcm16le_split_triggered()
 
 void MainWindow::on_actionPcm16le_halfvolumeleft_triggered()
 {
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -310,7 +319,7 @@ void MainWindow::on_actionPcm16le_halfvolumeleft_triggered()
 
 void MainWindow::on_actionPcm16le_doublespeed_triggered()
 {
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -320,7 +329,7 @@ void MainWindow::on_actionPcm16le_doublespeed_triggered()
 
 void MainWindow::on_actionPcm16le_to_pcm8_triggered()
 {
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -331,7 +340,7 @@ void MainWindow::on_actionPcm16le_to_pcm8_triggered()
 void MainWindow::on_actionPcm16le_cut_singlechannel_triggered()
 {
     // input file
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -375,7 +384,7 @@ void MainWindow::on_actionPcm16le_cut_singlechannel_triggered()
 void MainWindow::on_actionPcm16le_to_wave_triggered()
 {
     // input file
-    QString filePath = getFilePath();
+    QString filePath = getPcmFilePath();
     if(filePath.isNull()){
         return;
     }
@@ -415,4 +424,26 @@ void MainWindow::on_actionPcm16le_to_wave_triggered()
                                sampleRateSpinbox->value(),
                                "output_nocturne.wav");
     }
+}
+
+void MainWindow::on_actionH264_parser_triggered()
+{
+    QString filePath = getH264FilePath();
+    QString outputPath("output_log.txt");
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyH264::h264_parser(filePath.toLatin1().data(),outputPath.toLatin1().data());
+
+    QFile file(outputPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    ui->textBrowser->setText(file.readAll());
+//    while (!file.atEnd()) {
+//        QByteArray line = file.readLine();
+//        process_line(line);
+//    }
+//
 }

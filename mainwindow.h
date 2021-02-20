@@ -23,7 +23,8 @@ public:
 
 private:
     VideoInfo getInfoFromFilename();
-    QString getFilePath();
+    QString getPcmFilePath();
+    QString getH264FilePath();
 
 private slots:
     void on_actionYuv444_split_triggered();
@@ -59,6 +60,8 @@ private slots:
     void on_actionPcm16le_cut_singlechannel_triggered();
 
     void on_actionPcm16le_to_wave_triggered();
+
+    void on_actionH264_parser_triggered();
 
 private:
     Ui::MainWindow *ui;

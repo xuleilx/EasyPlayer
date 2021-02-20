@@ -14,16 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>401</width>
-      <height>241</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTextBrowser" name="textBrowser"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -66,9 +61,15 @@
      <addaction name="actionPcm16le_cut_singlechannel"/>
      <addaction name="actionPcm16le_to_wave"/>
     </widget>
+    <widget class="QMenu" name="menuH264">
+     <property name="title">
+      <string>H264</string>
+     </property>
+     <addaction name="actionH264_parser"/>
+    </widget>
     <addaction name="menuPixel"/>
     <addaction name="menuPCM"/>
-    <addaction name="actionH264"/>
+    <addaction name="menuH264"/>
     <addaction name="actionAAC"/>
     <addaction name="actionFLV"/>
     <addaction name="actionUDP_RTP"/>
@@ -84,11 +85,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionH264">
-   <property name="text">
-    <string>H264</string>
-   </property>
-  </action>
   <action name="actionAAC">
    <property name="text">
     <string>AAC</string>
@@ -187,6 +183,11 @@
   <action name="actionPcm16le_to_wave">
    <property name="text">
     <string>pcm16le_to_wave</string>
+   </property>
+  </action>
+  <action name="actionH264_parser">
+   <property name="text">
+    <string>h264_parser</string>
    </property>
   </action>
  </widget>

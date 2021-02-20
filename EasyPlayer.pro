@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     MyPixel.cpp \
-    MyPcm.cpp
+    MyPcm.cpp \
+    MyH264.cpp
 
 HEADERS  += mainwindow.h \
     MyPixel.h \
-    MyPcm.h
+    MyPcm.h \
+    MyH264.h
 
 FORMS    += mainwindow.ui
 
