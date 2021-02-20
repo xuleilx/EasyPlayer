@@ -85,6 +85,34 @@ public:
       *
       */
      static int rgb24_split(char *url, int w, int h,int num);
+
+     /**
+      * Convert RGB24 file to BMP file
+      * @param rgb24path    Location of input RGB file.
+      * @param width        Width of input RGB file.
+      * @param height       Height of input RGB file.
+      * @param url_out      Location of Output BMP file.
+      */
+     static int rgb24_to_bmp(const char *rgb24path,int width,int height,const char *bmppath);
+
+     /**
+      * Convert RGB24 file to YUV420P file
+      * @param url_in  Location of Input RGB file.
+      * @param w       Width of Input RGB file.
+      * @param h       Height of Input RGB file.
+      * @param num     Number of frames to process.
+      * @param url_out Location of Output YUV file.
+      */
+     static int rgb24_to_yuv420(char *url_in, int w, int h,int num,char *url_out);
+
+     /**
+      * Generate RGB24 colorbar.
+      * @param width    Width of Output RGB file.
+      * @param height   Height of Output RGB file.
+      * @param url_out  Location of Output RGB file.
+      */
+     static int rgb24_colorbar(int width, int height,char *url_out);
+
 };
 
 #endif // MYPIXEL_H

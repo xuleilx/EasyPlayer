@@ -41,6 +41,12 @@ private slots:
 
     void on_actionRgb24_split_triggered();
 
+    void on_actionRgb24_to_yuv420_triggered();
+
+    void on_actionRgb24_colorbar_triggered();
+
+    void on_actionRgb24_to_bmp_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

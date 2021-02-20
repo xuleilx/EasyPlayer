@@ -210,3 +210,73 @@ void MainWindow::on_actionRgb24_split_triggered()
                          videoInfo.height,
                          1);
 }
+
+void MainWindow::on_actionRgb24_to_yuv420_triggered()
+{
+    VideoInfo videoInfo1 = getInfoFromFilename();
+    if(videoInfo1.name.isEmpty() || videoInfo1.width == 0 || videoInfo1.height == 0){
+        return;
+    }
+    MyPixel::rgb24_to_yuv420(videoInfo1.name.toLatin1().data(),
+                             videoInfo1.width,
+                             videoInfo1.height,
+                             1,
+                             "output.yuv"
+                             );
+}
+
+void MainWindow::on_actionRgb24_colorbar_triggered()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // Width
+    QString width = QString("Width: ");
+    QSpinBox *widthSpinbox = new QSpinBox(&dialog);
+    widthSpinbox->setMaximum(9999);
+    form.addRow(width, widthSpinbox);
+    // Height
+    QString height = QString("Height: ");
+    QSpinBox *heightSpinbox = new QSpinBox(&dialog);
+    heightSpinbox->setMaximum(9999);
+    form.addRow(height, heightSpinbox);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<widthSpinbox->value();
+        qDebug()<<heightSpinbox->value();
+
+        if(widthSpinbox->value() == 0 || heightSpinbox->value() == 0) return;
+
+        QString fileName;
+        fileName.append("Output_").
+                append(QString::number(widthSpinbox->value())).
+                append('_').
+                append(QString::number(heightSpinbox->value())).
+                append(".rgb");
+        qDebug()<<fileName;
+        MyPixel::rgb24_colorbar(widthSpinbox->value(),
+                                heightSpinbox->value(),
+                                fileName.toLatin1().data());
+    }
+}
+
+void MainWindow::on_actionRgb24_to_bmp_triggered()
+{
+    VideoInfo videoInfo1 = getInfoFromFilename();
+    if(videoInfo1.name.isEmpty() || videoInfo1.width == 0 || videoInfo1.height == 0){
+        return;
+    }
+    MyPixel::rgb24_to_bmp(videoInfo1.name.toLatin1().data(),
+                          videoInfo1.width,
+                          videoInfo1.height,
+                          "output.bmp"
+                          );
+}
