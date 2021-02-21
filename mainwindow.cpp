@@ -12,6 +12,9 @@
 #include "MyPixel.h"
 #include "MyPcm.h"
 #include "MyH264.h"
+#include "MyAac.h"
+#include "MyFlv.h"
+#include "MyUdpRtp.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,7 +30,7 @@ MainWindow::~MainWindow()
 
 VideoInfo MainWindow::getInfoFromFilename(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home/xuleilx/Videos",
+                                                    "/home/xuleilx/mywork/video",
                                                     tr("Raw (*.yuv *.rgb)"));
     VideoInfo videoInfo={0,0,0};
 
@@ -63,15 +66,30 @@ VideoInfo MainWindow::getInfoFromFilename(){
 
 QString MainWindow::getPcmFilePath(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home/xuleilx/Music",
+                                                    "/home/xuleilx/mywork/audio",
                                                     tr("Raw (*.pcm)"));
+    return fileName;
+}
+
+QString MainWindow::getAacFilePath(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home/xuleilx/mywork/audio",
+                                                    tr("AAC (*.aac)"));
+    return fileName;
+}
+
+
+QString MainWindow::getFlvFilePath(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home/xuleilx/mywork/video",
+                                                    tr("FLV (*.flv)"));
     return fileName;
 }
 
 
 QString MainWindow::getH264FilePath(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home/xuleilx/Videos",
+                                                    "/home/xuleilx/mywork/video",
                                                     tr("Raw (*.h264)"));
     return fileName;
 }
@@ -441,9 +459,68 @@ void MainWindow::on_actionH264_parser_triggered()
         return;
 
     ui->textBrowser->setText(file.readAll());
-//    while (!file.atEnd()) {
-//        QByteArray line = file.readLine();
-//        process_line(line);
-//    }
-//
+}
+
+void MainWindow::on_actionAac_parser_triggered()
+{
+    QString filePath = getAacFilePath();
+    QString outputPath("output_log.txt");
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyAac::aac_parser(filePath.toLatin1().data(),outputPath.toLatin1().data());
+
+    QFile file(outputPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    ui->textBrowser->setText(file.readAll());
+}
+
+void MainWindow::on_actionFlv_parser_triggered()
+{
+    QString filePath = getFlvFilePath();
+    QString outputPath("output_log.txt");
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+    MyFlv::flv_parser(filePath.toLatin1().data(),outputPath.toLatin1().data());
+
+    QFile file(outputPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    ui->textBrowser->setText(file.readAll());
+}
+
+void MainWindow::on_actionUdp_parser_triggered()
+{
+    // input audio info
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // Sample Rate
+    QString port = QString("Port: ");
+    QSpinBox *portRateSpinbox = new QSpinBox(&dialog);
+    portRateSpinbox->setMaximum(99999);
+    form.addRow(port, portRateSpinbox);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<portRateSpinbox->value();
+
+        if(portRateSpinbox->value() == 0) return;
+
+        myUdpRtp = new MyUdpRtp(portRateSpinbox->value());
+        myUdpRtp->start();
+    }
 }

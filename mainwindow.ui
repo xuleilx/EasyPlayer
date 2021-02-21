@@ -67,12 +67,30 @@
      </property>
      <addaction name="actionH264_parser"/>
     </widget>
+    <widget class="QMenu" name="menuAAC">
+     <property name="title">
+      <string>AAC</string>
+     </property>
+     <addaction name="actionAac_parser"/>
+    </widget>
+    <widget class="QMenu" name="menuFLV">
+     <property name="title">
+      <string>FLV</string>
+     </property>
+     <addaction name="actionFlv_parser"/>
+    </widget>
+    <widget class="QMenu" name="menuUDP_RTP">
+     <property name="title">
+      <string>UDP-RTP</string>
+     </property>
+     <addaction name="actionUdp_parser"/>
+    </widget>
     <addaction name="menuPixel"/>
     <addaction name="menuPCM"/>
     <addaction name="menuH264"/>
-    <addaction name="actionAAC"/>
-    <addaction name="actionFLV"/>
-    <addaction name="actionUDP_RTP"/>
+    <addaction name="menuAAC"/>
+    <addaction name="menuFLV"/>
+    <addaction name="menuUDP_RTP"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -85,21 +103,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionAAC">
-   <property name="text">
-    <string>AAC</string>
-   </property>
-  </action>
-  <action name="actionFLV">
-   <property name="text">
-    <string>FLV</string>
-   </property>
-  </action>
-  <action name="actionUDP_RTP">
-   <property name="text">
-    <string>UDP-RTP</string>
-   </property>
-  </action>
   <action name="actionYuv420_split">
    <property name="text">
     <string>yuv420_split</string>
@@ -188,6 +191,21 @@
   <action name="actionH264_parser">
    <property name="text">
     <string>h264_parser</string>
+   </property>
+  </action>
+  <action name="actionAac_parser">
+   <property name="text">
+    <string>aac_parser</string>
+   </property>
+  </action>
+  <action name="actionFlv_parser">
+   <property name="text">
+    <string>flv_parser</string>
+   </property>
+  </action>
+  <action name="actionUdp_parser">
+   <property name="text">
+    <string>udp_parser</string>
    </property>
   </action>
  </widget>

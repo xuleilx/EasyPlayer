@@ -210,5 +210,6 @@ int MyH264::h264_parser(char *url,char* output_url){
         }
         free (n);
     }
+    fclose(myout);
     return 0;
 }

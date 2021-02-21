@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class MyUdpRtp;
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,6 +26,8 @@ public:
 private:
     VideoInfo getInfoFromFilename();
     QString getPcmFilePath();
+    QString getAacFilePath();
+    QString getFlvFilePath();
     QString getH264FilePath();
 
 private slots:
@@ -63,8 +67,15 @@ private slots:
 
     void on_actionH264_parser_triggered();
 
+    void on_actionAac_parser_triggered();
+
+    void on_actionFlv_parser_triggered();
+
+    void on_actionUdp_parser_triggered();
+
 private:
     Ui::MainWindow *ui;
+    MyUdpRtp* myUdpRtp;
 };
 
 #endif // MAINWINDOW_H

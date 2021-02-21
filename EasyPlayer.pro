@@ -16,12 +16,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     MyPixel.cpp \
     MyPcm.cpp \
-    MyH264.cpp
+    MyH264.cpp \
+    MyAac.cpp \
+    MyFlv.cpp \
+    MyUdpRtp.cpp
 
 HEADERS  += mainwindow.h \
     MyPixel.h \
     MyPcm.h \
-    MyH264.h
+    MyH264.h \
+    MyAac.h \
+    MyFlv.h \
+    MyUdpRtp.h
 
 FORMS    += mainwindow.ui
 
