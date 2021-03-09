@@ -15,6 +15,9 @@
 #include "MyAac.h"
 #include "MyFlv.h"
 #include "MyUdpRtp.h"
+#include "RtmpRecvFlv.h"
+#include "RtmpSendFlv.h"
+#include "MyFFmpeg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -91,6 +94,13 @@ QString MainWindow::getH264FilePath(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     "/home/xuleilx/mywork/video",
                                                     tr("Raw (*.h264)"));
+    return fileName;
+}
+
+QString MainWindow::getAudioFilePath(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home/xuleilx/mywork/audio",
+                                                    tr("AAC (*.aac *.mp3 *.ogg)"));
     return fileName;
 }
 
@@ -523,4 +533,109 @@ void MainWindow::on_actionUdp_parser_triggered()
         myUdpRtp = new MyUdpRtp(portRateSpinbox->value());
         myUdpRtp->start();
     }
+}
+
+void MainWindow::on_actionRecv_flv_triggered()
+{
+    QDialog dialog(this);
+    QSize dialogSize(400,100);
+    dialog.setFixedSize(dialogSize);
+    // layout
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // url
+    QString rtmpUrl = QString("RTMP URL: ");
+    QLineEdit *rtmpUrlLineedit = new QLineEdit(&dialog);
+    form.addRow(rtmpUrl, rtmpUrlLineedit);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<rtmpUrlLineedit->text();
+
+        if(rtmpUrlLineedit->text().isEmpty()) return;
+
+        myRtmpRecvFlv = new RtmpRecvFlv(rtmpUrlLineedit->text());
+        myRtmpRecvFlv->start();
+        // ---------------------
+        QMessageBox msgBox;
+        msgBox.setText("Receiving data ... \n\nPress OK to save as receive.flv");
+        if (msgBox.exec() == QMessageBox::Ok) {
+            // Do something here
+            qDebug()<<"Hi, I am OK!";
+            myRtmpRecvFlv->stop();
+        }
+    }
+}
+
+void MainWindow::on_actionSend_flv_triggered()
+{
+    QDialog dialog(this);
+    QSize dialogSize(400,130);
+    dialog.setFixedSize(dialogSize);
+    // layout
+    QFormLayout form(&dialog);
+    form.addRow(new QLabel("User input:"));
+    // file url
+    QString fileUrl = QString("File URL: ");
+    QLineEdit *fileUrlLineedit = new QLineEdit(&dialog);
+    form.addRow(fileUrl, fileUrlLineedit);
+    // rtmp url
+    QString rtmpUrl = QString("Rtmp URL: ");
+    QLineEdit *rtmpUrlLineedit = new QLineEdit(&dialog);
+    form.addRow(rtmpUrl, rtmpUrlLineedit);
+    // Add Cancel and OK button
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Process when OK button is clicked
+    if (dialog.exec() == QDialog::Accepted) {
+        // Do something here
+        qDebug()<<fileUrlLineedit->text();
+        qDebug()<<rtmpUrlLineedit->text();
+
+        if(fileUrlLineedit->text().isEmpty() || rtmpUrlLineedit->text().isEmpty()) return;
+
+        myRtmpSendFlv = new RtmpSendFlv(fileUrlLineedit->text(),rtmpUrlLineedit->text());
+        myRtmpSendFlv->start();
+        // ---------------------
+        QMessageBox msgBox;
+        msgBox.setText("Sending data ... \n\nPress OK to Stop!");
+        if (msgBox.exec() == QMessageBox::Ok) {
+            // Do something here
+            qDebug()<<"Hi, I am OK!";
+            myRtmpSendFlv->stop();
+        }
+    }
+}
+
+void MainWindow::on_actionSend_h264_triggered()
+{
+    ui->textBrowser->setText("Todo: incomplete");
+}
+
+void MainWindow::on_actionMedia_info_triggered()
+{
+    QString filePath = getAudioFilePath();
+    if(filePath.isNull()){
+        return;
+    }
+    qDebug()<<filePath;
+
+    MyFFmpeg fg(filePath);
+    fg.openMedia();
+    QString mediaInfo;
+    mediaInfo.append("Title\t: ").append(fg.getTitle()).append('\n');
+    mediaInfo.append("Artist\t: ").append(fg.getArtist()).append('\n');
+    mediaInfo.append("Album\t: ").append(fg.getAlbum());
+    ui->textBrowser->setText(mediaInfo);
 }

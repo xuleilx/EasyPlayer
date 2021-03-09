@@ -92,7 +92,23 @@
     <addaction name="menuFLV"/>
     <addaction name="menuUDP_RTP"/>
    </widget>
+   <widget class="QMenu" name="menuRTMP">
+    <property name="title">
+     <string>RTMP</string>
+    </property>
+    <addaction name="actionRecv_flv"/>
+    <addaction name="actionSend_flv"/>
+    <addaction name="actionSend_h264"/>
+   </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Audio</string>
+    </property>
+    <addaction name="actionMedia_info"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuRTMP"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="mainToolBar">
@@ -206,6 +222,26 @@
   <action name="actionUdp_parser">
    <property name="text">
     <string>udp_parser</string>
+   </property>
+  </action>
+  <action name="actionRecv_flv">
+   <property name="text">
+    <string>recv_flv</string>
+   </property>
+  </action>
+  <action name="actionSend_flv">
+   <property name="text">
+    <string>send_flv</string>
+   </property>
+  </action>
+  <action name="actionSend_h264">
+   <property name="text">
+    <string>send_h264</string>
+   </property>
+  </action>
+  <action name="actionMedia_info">
+   <property name="text">
+    <string>media_info</string>
    </property>
   </action>
  </widget>

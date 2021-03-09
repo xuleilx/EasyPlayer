@@ -1,17 +1,17 @@
-#ifndef MYUDPRTP_H
-#define MYUDPRTP_H
+#ifndef RECVFLV_H
+#define RECVFLV_H
 #include <QThread>
 
-class MyUdpRtp :public QThread
+class RtmpRecvFlv : public QThread
 {
 protected:
     void run()
     {
-        udp_parser();
+        recv();
     }
 public:
-    MyUdpRtp(int port);
-    int udp_parser();
+    RtmpRecvFlv(QString url);
+    int recv();
     void stop()
     {
         mStop = true;
@@ -19,7 +19,7 @@ public:
 private:
     //线程退出的标识量
     volatile bool mStop;
-    int mPort;
+    QString mUrl;
 };
 
-#endif // MYUDPRTP_H
+#endif // RECVFLV_H

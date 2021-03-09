@@ -19,7 +19,10 @@ SOURCES += main.cpp\
     MyH264.cpp \
     MyAac.cpp \
     MyFlv.cpp \
-    MyUdpRtp.cpp
+    MyUdpRtp.cpp \
+    RtmpRecvFlv.cpp \
+    RtmpSendFlv.cpp \
+    MyFFmpeg.cpp
 
 HEADERS  += mainwindow.h \
     MyPixel.h \
@@ -27,9 +30,15 @@ HEADERS  += mainwindow.h \
     MyH264.h \
     MyAac.h \
     MyFlv.h \
-    MyUdpRtp.h
+    MyUdpRtp.h \
+    RtmpRecvFlv.h \
+    RtmpSendFlv.h \
+    MyFFmpeg.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += /usr/local/include/
+LIBS += -lrtmp -lavformat -lavcodec -lavutil -lswresample -lx264 -lx265 -lmp3lame -pthread -lz -lbz2
 
 RESOURCES += \
     easyplayer.qrc

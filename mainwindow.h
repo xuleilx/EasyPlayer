@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 class MyUdpRtp;
+class RtmpRecvFlv;
+class RtmpSendFlv;
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +29,7 @@ private:
     VideoInfo getInfoFromFilename();
     QString getPcmFilePath();
     QString getAacFilePath();
+    QString getAudioFilePath();
     QString getFlvFilePath();
     QString getH264FilePath();
 
@@ -73,9 +76,19 @@ private slots:
 
     void on_actionUdp_parser_triggered();
 
+    void on_actionRecv_flv_triggered();
+
+    void on_actionSend_flv_triggered();
+
+    void on_actionSend_h264_triggered();
+
+    void on_actionMedia_info_triggered();
+
 private:
     Ui::MainWindow *ui;
     MyUdpRtp* myUdpRtp;
+    RtmpRecvFlv* myRtmpRecvFlv;
+    RtmpSendFlv* myRtmpSendFlv;
 };
 
 #endif // MAINWINDOW_H
